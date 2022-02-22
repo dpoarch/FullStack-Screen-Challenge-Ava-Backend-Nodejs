@@ -2,11 +2,13 @@ const http = require("http");
 const express = require("express");
 const cors = require("cors");
 const socketIo = require("socket.io");
+var bodyParser = require('body-parser')
 const { addUser, removeUser, getUsersInRoom } = require("./users");
-const { addMessage, getMessagesInRoom, getConversations } = require("./messages");
+const { addMessage, getMessagesInRoom, getConversations, insertMutations } = require("./messages");
 
 const app = express();
 app.use(cors());
+app.use(bodyParser.json())
 
 const server = http.createServer(app);
 const io = socketIo(server, {
@@ -78,6 +80,15 @@ app.get("/conversations", (req, res) => {
   return res.json({ conversations });
 });
 
+app.get("/ping", (req, res) => {
+  const messages = {
+  "ok": true,
+  "msg": "pong"
+  };
+  res.set('Access-Control-Allow-Origin', '*');
+  return res.json({ messages });
+});
+
 app.get("/info", (req, res) => {
   const messages = {
   "ok": true,
@@ -93,6 +104,16 @@ app.get("/info", (req, res) => {
   "sourcesBackend": "https://github.com/dpoarch/FullStack-Screen-Challenge-Ava-Backend-Nodejs"
 };
   res.set('Access-Control-Allow-Origin', '*');
+  return res.json({ messages });
+});
+
+app.post("/mutations", (req, res) => {
+  if(!req.body.author){
+    return res.status(400).json({status: 400, ok:"false", msg: "an error message, if needed"});
+  }else{
+    var messages = insertMutations(req.body);
+  }
+  
   return res.json({ messages });
 });
 

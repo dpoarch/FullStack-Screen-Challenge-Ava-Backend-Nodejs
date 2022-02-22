@@ -2,6 +2,7 @@ var uuid = require("uuid");
 
 const messages = [];
 const conversations = [];
+const mutations = [];
 
 const addMessage = (room, message) => {
   const msg = { id: uuid.v4(), room, ...message,  };
@@ -44,4 +45,10 @@ const getMessagesInRoom = (room) =>
 const getConversations = (room) =>
   conversations;
 
-module.exports = { addMessage, removeMessage, getMessage, getMessagesInRoom, getConversations };
+const insertMutations = (req) => {
+	const result = {"ok": true, "text": req.data.text};
+	mutations.push(req);
+  return result;
+};
+
+module.exports = { addMessage, removeMessage, getMessage, getMessagesInRoom, getConversations, insertMutations };
