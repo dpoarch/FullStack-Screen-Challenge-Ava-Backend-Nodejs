@@ -11,7 +11,7 @@ app.use(cors());
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: "https://react-node-deployment-dev.herokuapp.com/",
+    origin: "react-node-deployment-dev.herokuapp.com",
     methods: ["GET", "POST"],
     credentials: true,
   },
