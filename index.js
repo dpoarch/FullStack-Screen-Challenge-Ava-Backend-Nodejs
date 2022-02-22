@@ -57,42 +57,24 @@ io.on("connection", (socket) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
+  console.log(`Listening on port ${PORT}`); 
 });
 
 app.get("/rooms/:roomId/users", (req, res) => {
   const users = getUsersInRoom(req.params.roomId);
+  res.set('Access-Control-Allow-Origin', '*');
   return res.json({ users });
 });
 
 app.get("/rooms/:roomId/messages", (req, res) => {
   const messages = getMessagesInRoom(req.params.roomId);
+  res.set('Access-Control-Allow-Origin', '*');
   return res.json({ messages });
 });
 
 app.get("/conversations", (req, res) => {
   const conversations = getConversations("dev");
-
-  // const myJson = {
-  //   "ok": true,
-  //   "conversations": [
-  //     {
-  //       "id": "string",
-  //       "text": "string",
-  //       "lastMutation": { // The last mutation of this conversation
-  //         "type": "insert | delete",
-  //         "index": "number",
-  //         "length": count,
-  //         "text": "string | undefined",
-  //         "author": "alice | bob",
-  //         "origin": {
-  //           "alice": "number",
-  //           "bob": "number"
-  //         }
-  //       }
-  //     }
-  //   ]
-  // }
+  res.set('Access-Control-Allow-Origin', '*');
   return res.json({ conversations });
 });
 
@@ -110,6 +92,7 @@ app.get("/info", (req, res) => {
   "sources": "https://github.com/dpoarch/FullStack-Screen-Challenge-Ava",
   "sourcesBackend": "https://github.com/dpoarch/FullStack-Screen-Challenge-Ava-Backend-Nodejs"
 };
+  res.set('Access-Control-Allow-Origin', '*');
   return res.json({ messages });
 });
 
