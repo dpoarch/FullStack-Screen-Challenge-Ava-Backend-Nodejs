@@ -26,8 +26,36 @@ The project will now run at: localhost:4000
 ```php
 
  [GET] localhost:4000/ping
- [GET] localhost:4000/conversation
+ [GET] localhost:4000/conversations
  [GET] localhost:4000/info
- [POST] localhost:4000/mutation
+
+```
+
+```php
+
+ [POST] localhost:4000/mutations
+
+```
+
+
+```php
+
+[Request Body]
+{
+	"author": "alice | bob",
+	"origin": {
+    // Get the latest mutation of the conversation first
+    "alice": "number", // should be incremented if this mutation is requested by alice.
+    "bob": "number" // should be incremented if this mutation is requested by bob.
+  },
+	"conversationId": "",
+	"data": {
+		"type": "insert | delete",
+		"index": "number", // the start index where the mutation will be applied
+		"length": "number | undefined", // the length of the text which will inserted or deleted
+		"text": "string | undefined", // the text which will be inserted or deleted
+	}
+}
+
 
 ```
